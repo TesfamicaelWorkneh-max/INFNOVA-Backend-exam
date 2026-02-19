@@ -1,13 +1,15 @@
-import {isNotEmpty,IsString} from "class-validator";
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateCourseDto{
-     @IsString()
-     @isNotEmpty()
-     title:string;
-     @IsString()
-     @isNotEmpty()
-     level:string;
-     @IsString()
-     @isNotEmpty()
-     duration:string;
+export class CreateCourseDto {
+  @IsString()
+  @IsNotEmpty()
+  title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  level: string;
+
+  @IsString()
+  @IsNotEmpty()
+  duration: string;
 }

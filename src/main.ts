@@ -6,6 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   /* Enable global validation for DTOs not for @param or @query just for @body this is like middleware in node
    app.use(express.json()) this will parse the json(string) comming from the user  in to object type then make usable for the controller like req.body */
+  app.setGlobalPrefix('api/v1'); //added global prefix 
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,            // remove extra unknown properties
@@ -13,6 +14,8 @@ async function bootstrap() {
       transform: true,            // automatically transform types (like string -> number)
     }),
   );
+
+  //swager setup
   const config = new DocumentBuilder()
     .setTitle('Courses API')
     .setDescription('API for INFNOVA Backend Internship Challenge')

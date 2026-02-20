@@ -1,6 +1,7 @@
-import { Controller,Get,Post,Body,Param,ParseIntPipe,HttpCode,HttpStatus, } from '@nestjs/common';
-import { CoursesService } from './courses.service';
-import { CreateCourseDto } from './dto/create-course.dto';
+import { Controller,Get,Post,Put,Delete,Body,Param,ParseIntPipe,HttpCode,HttpStatus, } from '@nestjs/common';
+import { Course, CoursesService } from './courses.service';
+import { CreateCourseDto} from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 @Controller('courses') //this is the base for API call like GET/courses every course related APIs must start with courses unless 404 status will be happen
 export class CoursesController {
     /*this will create instance of Service and assign it for coursesService like  ,const coursesService = new CoursesService
@@ -20,11 +21,22 @@ export class CoursesController {
   }
 
   // POST /courses
-  @Post()  // router.post("/",create)
+  @Post()  // router.post("/coursee",create)
   @HttpCode(HttpStatus.CREATED) // this like, return res.status(201) in node which mean something is created in our database 
   //@body is like req.body(node) then after that the values will be sent for dto then will validated againest  CreateCourseDto like are they looks the DTO 
   create(@Body() dto: CreateCourseDto) {
-    return this.coursesService.create(dto); //call service handler with id 
+    return this.coursesService.create(dto); //call service handler with dto(validated req.body)
   }
+  @Put(':id')// patch /courses/:id
+update(
+  @Param('id', ParseIntPipe) id: number,
+  @Body() dto: UpdateCourseDto,
+) {
+  return this.coursesService.update(id, dto);
+}
+@Delete(':id') // DELETE /courses/:id
+remove(@Param('id', ParseIntPipe) id: number) {
+  return this.coursesService.remove(id);
+}
 }
 
